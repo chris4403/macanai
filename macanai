@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use LWP::Simple qw(get);
+use JSON::XS;
+use Perl6::Say;
+
+my $count = shift || 1;
+
+my $res = get sprintf "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=macanai&count=%s", $count;
+my $json = decode_json $res;
+foreach my $entry (@$json) {
+    say $entry->{text};
+}
